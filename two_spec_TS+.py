@@ -19,7 +19,6 @@ KERNEL = np.array([[1, 1, 1],
                    [1, 0, 1], 
                    [1, 1, 1]])
 
-
 def main():
     pygame.init()
     screen = pygame.display.set_mode((WIDTH_PX, HEIGHT_PX))
@@ -42,7 +41,7 @@ def main():
     def update_caption():
         status = "Running" if not paused else "Paused"
         pygame.display.set_caption(
-            f"Lotka-Volterra [{status}] at {current_fps} FPS | Grow: {r_grow:.3f} | Eat: {p_eat:.3f} | Die: {d_die:.3f} | 'P' to Plot"
+            f"My Fish [{status}] at {current_fps} FPS | Grow: {r_grow:.3f} | Eat: {p_eat:.3f} | Die: {d_die:.3f} | Epsilon: {varepsilon:.3f} | 'P' to Plot"
         )
 
     update_caption()
@@ -91,6 +90,10 @@ def main():
                     d_die = min(1.0, d_die + 0.01); update_caption()
                 elif event.key == pygame.K_d:
                     d_die = max(0.0, d_die - 0.01); update_caption()
+                elif event.key == pygame.K_t:
+                    varepsilon = min(1.0, varepsilon + 0.001); update_caption()
+                elif event.key == pygame.K_g:
+                    varepsilon = max(0.0, varepsilon - 0.01); update_caption()
 
 
                 # --- Speed Control Logic ---
