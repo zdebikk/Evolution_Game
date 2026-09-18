@@ -24,6 +24,7 @@ INSTRUCTIONS_TEXT = [
     "UP/DN : Adjust Simulation Speed (FPS)",
     "R     : Reset Grid to Initial State",
     "C     : Clear Grid completely",
+    "X     : Toggle Fullscreen",
     "",
     "--- [1] DISCRETE CONWAY KERNELS ---",
     "1-4   : Switch Spatial Kernels",
@@ -74,6 +75,8 @@ def main():
 
     show_instructions = False
 
+    is_fullscreen = False
+
     while True:
         screen.fill(BG_COLOR)
 
@@ -117,18 +120,27 @@ def main():
                         
                 elif event.key == pygame.K_i:
                     show_instructions = not show_instructions
+
+                elif event.key == pygame.K_x:
+                    is_fullscreen = not is_fullscreen
+                    if is_fullscreen:
+                        screen = pygame.display.set_mode((WIDTH, HEIGHT), pygame.FULLSCREEN)
+                    else:
+                        screen = pygame.display.set_mode((WIDTH, HEIGHT))
                     
                 # Launch selected script if on the main menu
                 elif not show_instructions and event.key in SIMULATIONS:
                     target_script = SIMULATIONS[event.key]
-                    
-                    # Update caption to show it is running
                     pygame.display.set_caption(f"Running: {target_script}...")
                     
-                    # Launch the script using the current virtual environment's Python interpreter
-                    subprocess.Popen([sys.executable, target_script]).wait()
+                    # --- NEW: Pass the fullscreen state to the child script ---
+                    launch_args = [sys.executable, target_script]
+                    if is_fullscreen:
+                        launch_args.append("--fullscreen")
                     
-                    # Restore caption when the child script is closed
+                    subprocess.Popen(launch_args).wait()
+                    # ----------------------------------------------------------
+                    
                     pygame.display.set_caption("Evolution Game - Central Hub")
 
         clock.tick(15)

@@ -1,3 +1,5 @@
+import sys
+
 import pygame
 import numpy as np
 from scipy.signal import convolve2d
@@ -52,6 +54,14 @@ def main():
 
     update_caption()
 
+    # Initialize state based on what the hub passed to it
+    is_fullscreen = "--fullscreen" in sys.argv
+    
+    if is_fullscreen:
+        screen = pygame.display.set_mode((WIDTH_PX, HEIGHT_PX), pygame.FULLSCREEN)
+    else:
+        screen = pygame.display.set_mode((WIDTH_PX, HEIGHT_PX))
+
     while running:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
@@ -68,6 +78,13 @@ def main():
                 elif event.key == pygame.K_f:
                     fade_enabled = not fade_enabled
                     update_caption()
+                elif event.key == pygame.K_x:
+                    is_fullscreen = not is_fullscreen
+                    if is_fullscreen:
+                        # Use (WIDTH, HEIGHT) if you are pasting this inside main.py
+                        screen = pygame.display.set_mode((WIDTH_PX, HEIGHT_PX), pygame.FULLSCREEN)
+                    else:
+                        screen = pygame.display.set_mode((WIDTH_PX, HEIGHT_PX))
                 elif event.key == pygame.K_c:
                     grid = np.zeros((COLS, ROWS), dtype=np.uint8)
                     display_rgb[:, :] = BG_COLOR
