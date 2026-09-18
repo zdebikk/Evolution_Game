@@ -8,6 +8,7 @@ ROWS = 175
 CELL_SIZE = 4
 WIDTH_PX = COLS * CELL_SIZE
 HEIGHT_PX = ROWS * CELL_SIZE
+PROBABILITY_ALIVE = 0.15  # Probability that a cell starts alive
 
 # --- 2. Visuals ---
 BG_COLOR = np.array([18, 18, 24])
@@ -19,15 +20,17 @@ KERNEL = np.array([[1, 1, 1],
                    [1, 1, 1]])
 
 def init_grid():
-    return np.random.choice([0, 1], size=(COLS, ROWS), p=[0.85, 0.15])
+    return np.random.choice([0, 1], size=(COLS, ROWS), p=[1-PROBABILITY_ALIVE, PROBABILITY_ALIVE])
 
 def main():
-    pygame.init()
+    pygame.init() 
     screen = pygame.display.set_mode((WIDTH_PX, HEIGHT_PX))
     pygame.display.set_caption("Game of Life - Paused (Press SPACE to run)")
     clock = pygame.time.Clock()
 
-    grid = np.zeros((COLS, ROWS), dtype=np.uint8) # Start with a blank canvas
+
+    grid = init_grid()  # Start with a random canvas
+    #grid = np.zeros((COLS, ROWS), dtype=np.uint8) # Start with a blank canvas
     rgb_array = np.zeros((COLS, ROWS, 3), dtype=np.uint8)
 
     running = True
