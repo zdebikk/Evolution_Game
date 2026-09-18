@@ -15,7 +15,8 @@ SIMULATIONS = {
     pygame.K_1: "conway_kernel_FO_SLO+.py",
     pygame.K_2: "lenia_SLO+.py",
     pygame.K_3: "SIR_quarantine_TS+.py",
-    pygame.K_4: "two_spec_TS+.py" 
+    pygame.K_4: "two_spec_TS+.py",
+    pygame.K_5: "moje_rybki+.py"  
 }
 
 INSTRUCTIONS_TEXT = [
@@ -41,7 +42,7 @@ INSTRUCTIONS_TEXT = [
     "P     : Generate Matplotlib Epidemic Curve",
     "Clicks: Left=Infect, Right=Quarantine Wall, Mid=Erase",
     "",
-    "--- [4] LOTKA-VOLTERRA DYNAMICS ---",
+    "--- [4/5] LOTKA-VOLTERRA DYNAMICS ---",
     "Q / A : Adjust Prey Growth Rate",
     "W / S : Adjust Predation Rate",
     "E / D : Adjust Predator Death Rate",
@@ -86,6 +87,7 @@ def main():
             opt2 = font_medium.render("[2] Continuous Automaton (Lenia)", True, TEXT_COLOR)
             opt3 = font_medium.render("[3] Spatial SIR Epidemic", True, TEXT_COLOR)
             opt4 = font_medium.render("[4] Lotka-Volterra Predator/Prey", True, TEXT_COLOR)
+            opt5 = font_medium.render("[5] My Fish", True, TEXT_COLOR)
             
             info = font_medium.render("Press [I] to view all controls & instructions", True, HIGHLIGHT)
             quit_opt = font_medium.render("[ESC] Quit", True, WARNING_COLOR)
@@ -95,7 +97,7 @@ def main():
             screen.blit(opt2, (50, 190))
             screen.blit(opt3, (50, 240))
             screen.blit(opt4, (50, 290))
-            
+            screen.blit(opt5, (50, 340))
             screen.blit(info, (50, 420))
             screen.blit(quit_opt, (50, 480))
 
