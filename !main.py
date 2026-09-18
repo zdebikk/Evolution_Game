@@ -16,7 +16,7 @@ SIMULATIONS = {
     pygame.K_2: "lenia_SLO+.py",
     pygame.K_3: "SIR_quarantine_TS+.py",
     pygame.K_4: "two_spec_TS+.py",
-    pygame.K_5: "moje_rybki+.py"  
+    pygame.K_5: "rybki_fale+.py"  
 }
 
 INSTRUCTIONS_TEXT = [
