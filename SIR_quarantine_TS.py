@@ -2,6 +2,8 @@ import pygame
 import numpy as np
 from scipy.signal import convolve2d
 import matplotlib.pyplot as plt
+import csv
+from datetime import datetime
 
 # --- 1. Dimensions & Resolution ---
 COLS = 300
