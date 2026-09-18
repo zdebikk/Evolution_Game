@@ -81,7 +81,7 @@ def main():
             render_multiline(screen, INSTRUCTIONS_TEXT, font_small, 40, 40, TEXT_COLOR)
         else:
             # Main Menu Rendering
-            title = font_large.render("Ecosystem Engine", True, HIGHLIGHT)
+            title = font_large.render("GAME of LIFE", True, HIGHLIGHT)
             opt1 = font_medium.render("[1] Conway Custom Kernels", True, TEXT_COLOR)
             opt2 = font_medium.render("[2] Continuous Automaton (Lenia)", True, TEXT_COLOR)
             opt3 = font_medium.render("[3] Spatial SIR Epidemic", True, TEXT_COLOR)
