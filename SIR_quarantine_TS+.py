@@ -57,7 +57,7 @@ def main():
                 if event.key == pygame.K_SPACE:
                     paused = not paused
                     update_caption()
-                elif event.key == pygame.K_r:
+                elif event.key == pygame.K_c:
                     grid = np.zeros((COLS, ROWS), dtype=np.uint8)
                 elif event.key == pygame.K_ESCAPE:
                     running = False

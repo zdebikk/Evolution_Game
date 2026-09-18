@@ -19,6 +19,7 @@ KERNEL = np.array([[1, 1, 1],
                    [1, 0, 1], 
                    [1, 1, 1]])
 
+
 def main():
     pygame.init()
     screen = pygame.display.set_mode((WIDTH_PX, HEIGHT_PX))
@@ -41,7 +42,7 @@ def main():
     def update_caption():
         status = "Running" if not paused else "Paused"
         pygame.display.set_caption(
-            f"Lotka-Volterra [{status}] | Grow: {r_grow:.3f} | Eat: {p_eat:.3f} | Die: {d_die:.3f} | 'P' to Plot"
+            f"Lotka-Volterra [{status}] at {current_fps} FPS | Grow: {r_grow:.3f} | Eat: {p_eat:.3f} | Die: {d_die:.3f} | 'P' to Plot"
         )
 
     update_caption()
@@ -60,6 +61,8 @@ def main():
                     history = {'Prey': [], 'Pred': []}
                 elif event.key == pygame.K_ESCAPE:
                     running = False
+                elif event.key == pygame.K_c:
+                    grid = np.zeros((COLS, ROWS), dtype=np.uint8)
                 
                 # --- Plotting Logic ---
                 elif event.key == pygame.K_p:
@@ -88,6 +91,16 @@ def main():
                     d_die = min(1.0, d_die + 0.01); update_caption()
                 elif event.key == pygame.K_d:
                     d_die = max(0.0, d_die - 0.01); update_caption()
+
+
+                # --- Speed Control Logic ---
+                elif event.key == pygame.K_UP:
+                    current_fps += 5
+                    update_caption()
+                elif event.key == pygame.K_DOWN:
+                    # Prevent FPS from going to 0 or negative, which crashes clock.tick()
+                    current_fps = max(1, current_fps - 5)
+                    update_caption()
 
         mouse_buttons = pygame.mouse.get_pressed()
         if any(mouse_buttons):
