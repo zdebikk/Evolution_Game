@@ -3,18 +3,15 @@ import numpy as np
 from scipy.signal import convolve2d
 
 # --- 1. Dimensions & Resolution ---
-COLS = 300       # Number of logical cells horizontally
-ROWS = 175       # Number of logical cells vertically
-CELL_SIZE = 4    # Each cell renders as a 4x4 pixel block
-
-# The window resolution is now calculated dynamically based on the grid
+COLS = 300
+ROWS = 175
+CELL_SIZE = 4
 WIDTH_PX = COLS * CELL_SIZE
 HEIGHT_PX = ROWS * CELL_SIZE
 
 # --- 2. Visuals ---
-# Pygame expects RGB colors. 
-BG_COLOR = np.array([18, 18, 24])        # Dark slate background
-ALIVE_COLOR = np.array([0, 255, 170])    # Neon mint for living cells
+BG_COLOR = np.array([18, 18, 24])
+ALIVE_COLOR = np.array([0, 255, 170])
 
 # --- 3. Core Engine ---
 KERNEL = np.array([[1, 1, 1],
@@ -22,51 +19,66 @@ KERNEL = np.array([[1, 1, 1],
                    [1, 1, 1]])
 
 def init_grid():
-    # Initialize the asymmetric grid with a 15% chance of a cell being alive
     return np.random.choice([0, 1], size=(COLS, ROWS), p=[0.85, 0.15])
 
 def main():
     pygame.init()
     screen = pygame.display.set_mode((WIDTH_PX, HEIGHT_PX))
-    pygame.display.set_caption("Game of Life - Vectorized Animation")
+    pygame.display.set_caption("Game of Life - Paused (Press SPACE to run)")
     clock = pygame.time.Clock()
 
-    grid = init_grid()
-    
-    # Pre-allocate an RGB array to translate the 0s and 1s into pixel data
-    # Pygame's surfarray natively expects a (width, height, 3) configuration
+    grid = np.zeros((COLS, ROWS), dtype=np.uint8) # Start with a blank canvas
     rgb_array = np.zeros((COLS, ROWS, 3), dtype=np.uint8)
 
     running = True
+    paused = True  # Simulation starts paused
+
     while running:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 running = False
-            elif event.type == pygame.KEYDOWN and event.key == pygame.K_r:
-                grid = init_grid()  # Press 'R' to randomize and restart the animation
+            elif event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_r:
+                    grid = init_grid()
+                elif event.key == pygame.K_SPACE:
+                    paused = not paused
+                    caption = "Game of Life - Running" if not paused else "Game of Life - Paused"
+                    pygame.display.set_caption(caption)
+
+        # --- Mouse Drawing Logic ---
+        # 0: Left Click (Draw), 2: Right Click (Erase)
+        mouse_buttons = pygame.mouse.get_pressed()
+        if mouse_buttons[0] or mouse_buttons[2]:
+            mouse_x, mouse_y = pygame.mouse.get_pos()
+            
+            # Map window pixels back to logical grid coordinates
+            grid_x = mouse_x // CELL_SIZE
+            grid_y = mouse_y // CELL_SIZE
+            
+            # Boundary check to prevent errors if the mouse drags outside the window
+            if 0 <= grid_x < COLS and 0 <= grid_y < ROWS:
+                if mouse_buttons[0]:
+                    grid[grid_x, grid_y] = 1
+                elif mouse_buttons[2]:
+                    grid[grid_x, grid_y] = 0
 
         # --- Phase 1: Compute Next Generation ---
-        neighbors = convolve2d(grid, KERNEL, mode='same', boundary='wrap')
-        # Apply B3/S23 rules. The bitwise operators keep this entirely in C.
-        grid = ((neighbors == 3) | ((grid == 1) & (neighbors == 2))).astype(np.uint8)
+        if not paused:
+            neighbors = convolve2d(grid, KERNEL, mode='same', boundary='wrap')
+            grid = ((neighbors == 3) | ((grid == 1) & (neighbors == 2))).astype(np.uint8)
 
         # --- Phase 2: Render Animation ---
-        # Map the binary states to the pre-allocated color arrays
         rgb_array[grid == 0] = BG_COLOR
         rgb_array[grid == 1] = ALIVE_COLOR
 
-        # Instantly convert the raw NumPy RGB array into a renderable Pygame Surface
         surface = pygame.surfarray.make_surface(rgb_array)
-        
-        # Scale the small logical surface up to fill the exact pixel dimensions of the window
         scaled_surface = pygame.transform.scale(surface, (WIDTH_PX, HEIGHT_PX))
         
-        # Draw and update the frame
         screen.blit(scaled_surface, (0, 0))
         pygame.display.flip()
         
-        # Cap at 30 FPS so you can actually watch the patterns evolve
-        clock.tick(30)
+        # Boost framerate while paused for smoother mouse drawing
+        clock.tick(60 if paused else 30)
 
     pygame.quit()
 
