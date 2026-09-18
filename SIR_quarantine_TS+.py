@@ -59,6 +59,8 @@ def main():
                     update_caption()
                 elif event.key == pygame.K_r:
                     grid = np.zeros((COLS, ROWS), dtype=np.uint8)
+                elif event.key == pygame.K_ESCAPE:
+                    running = False
                 
                 # --- Parameter Tuning Logic ---
                 elif event.key == pygame.K_q:

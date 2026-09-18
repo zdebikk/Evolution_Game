@@ -60,6 +60,8 @@ def main():
                 if event.key == pygame.K_r:
                     grid = init_grid()
                     display_rgb[:, :] = BG_COLOR
+                elif event.key == pygame.K_ESCAPE:
+                    running = False
                 elif event.key == pygame.K_SPACE:
                     paused = not paused
                     update_caption()

@@ -62,6 +62,8 @@ def main():
             elif event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_r:
                     grid = init_grid()
+                elif event.key == pygame.K_ESCAPE:
+                    running = False
                 elif event.key == pygame.K_SPACE:
                     paused = not paused
                     update_caption()

@@ -58,6 +58,8 @@ def main():
                     # Reset both grid and history
                     grid = np.random.choice([0, 1, 2], size=(COLS, ROWS), p=[0.90, 0.08, 0.02]).astype(np.uint8)
                     history = {'Prey': [], 'Pred': []}
+                elif event.key == pygame.K_ESCAPE:
+                    running = False
                 
                 # --- Plotting Logic ---
                 elif event.key == pygame.K_p:
