@@ -113,8 +113,9 @@ def main():
                 elif mouse_buttons[2]: 
                     grid[gx-2:gx+3, gy-2:gy+3] = 1
 
-        wave = (0.5 * (np.sin(2*np.pi/COLS* X * 2 +frame_count * 0.02 )) + 0.5)
-
+        #wave = (0.5 * (np.sin(2*np.pi/COLS* X * 2 +frame_count * 0.02 )) + 0.5)
+        #wave = (0.25 * (np.sin(2*np.pi/COLS* X * 2 +frame_count * 0.02 )) + 0.25 * (np.sin(2*np.pi/ROWS* Y * 2 +frame_count * 0.02 )) + 0.5)
+        wave = (0.25 * (np.sin(2*np.pi/COLS* X * 3 )) + 0.25 * (np.sin(2*np.pi/ROWS* Y * 2 )))*np.sin(frame_count * 0.02) + 0.5
         if not paused:
             frame_count += 1
 
