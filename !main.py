@@ -14,7 +14,7 @@ WARNING_COLOR = (255, 85, 85)
 SIMULATIONS = {
     pygame.K_1: "conway_kernel_FO_SLO+.py",
     pygame.K_2: "lenia_SLO+.py",
-    pygame.K_3: "SIR_quarantine_TS+.py",
+    pygame.K_3: "SIR_quarantine_TS_D_ID_Trav_SLO_AQ+.py",
     pygame.K_4: "two_spec_TS+.py",
     pygame.K_5: "rybki_fale+.py"  
 }

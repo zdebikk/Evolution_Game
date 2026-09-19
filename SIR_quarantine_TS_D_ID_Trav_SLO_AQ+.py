@@ -43,7 +43,7 @@ def main():
     travel_rate = 20
     
     # Quarantine Parameters (Threshold might need to be higher now since the area is larger)
-    q_threshold = 5  
+    q_threshold = 7
     q_duration = 30  
 
     running = True
