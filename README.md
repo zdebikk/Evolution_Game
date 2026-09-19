@@ -1,16 +1,21 @@
-# Cellular Automata & Evolutionary Dynamics Lab
+# Evolution Game Hub
 
-A modular simulation suite for emergent systems: continuous automata (Lenia), 
-spatial game theory (Prisoner's Dilemma, RPS), epidemiology (SIR), and Conway variants.
+A collection of spatial cellular automata and evolutionary game theory simulations, including Conway's Game of Life, Lenia, Lotka-Volterra, and the Iterated Prisoner's Dilemma. All simulations are unified under a single Pygame interactive hub.
 
-The suggested version of Python for this is 3.12
+## Prerequisites
+* **Python 3.12** (Strictly recommended to ensure compatibility with the specific NumPy 2.4 and Pygame 2.6 rendering pipeline used in this project)
+* Git
 
-## Quickstart
+## Installation & Setup
 
-1. **Clone & Setup Environment**:
+1. **Clone the repository:**
    ```bash
    git clone [https://github.com/zdebikk/Evolution_Game.git](https://github.com/zdebikk/Evolution_Game.git)
    cd Evolution_Game
-   python -m venv .venv
-   .venv\Scripts\activate  # On Linux/MacOS: source .venv/bin/activate
-   pip install -r requirements.txt
+
+
+   python -m venv .venv # Create a virtual environment
+   .venv\Scripts\activate # Activate the environment
+   # macOS/Linux: source .venv/bin/activate
+   pip install -r requirements.txt # Install dependencies
+   python main.py
