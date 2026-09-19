@@ -59,7 +59,7 @@ def main():
     def update_caption():
         status = "Running" if not paused else "Paused"
         pygame.display.set_caption(
-            f"My Fish [{status}] at {current_fps} FPS | Wave: {wave_type} | Grow: {r_grow:.3f} | Eat: {p_eat:.3f} | Die: {d_die:.3f} | Epsilon: {varepsilon:.3f} | 'P' to Plot"
+            f"My Fish [{status}] at {current_fps} FPS | Wave(Z): {wave_type} | Grow(Q/A): {r_grow:.3f} | Eat(W/S): {p_eat:.3f} | Die(E/D): {d_die:.3f} | Epsilon(T/G): {varepsilon:.3f} | 'P' to Plot"
         )
 
     update_caption()
@@ -122,6 +122,8 @@ def main():
             if 0 < gx < COLS-1 and 0 < gy < ROWS-1:
                 if mouse_buttons[0]:   
                     grid[gx-2:gx+3, gy-2:gy+3] = 2
+                elif mouse_buttons[1]:   
+                    grid[gx-2:gx+3, gy-2:gy+3] = 3
                 elif mouse_buttons[2]: 
                     grid[gx-2:gx+3, gy-2:gy+3] = 1
 

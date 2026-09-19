@@ -56,7 +56,8 @@ def main():
     def update_caption():
         status = "Run" if not paused else "Psd"
         pygame.display.set_caption(
-            f"RPS [{status}] FPS:{current_fps} | Grow:{p_grow:.2f} | Beat:{p_beat:.2f} | Die:{p_die:.2f} | Varepsilon:{varepsilon:.4f}"
+            
+            f"RPS [{status}] at {current_fps} FPS | Grow(Q/A): {p_grow:.2f} | Eat(W/S): {p_beat:.2f} | Die(E/D): {p_die:.2f} | Epsilon(T/G): {varepsilon:.3f} | p_beat_r(Y/H): {p_beat_r:.2f} | r_beat_s(U/J): {r_beat_s:.2f} | s_beat_p(I/K): {s_beat_p:.2f} | 'P' to Plot"
         )
 
     update_caption()
@@ -79,12 +80,22 @@ def main():
                 # --- Parameter Tuning Logic ---
                 elif event.key == pygame.K_q: p_grow = min(1.0, p_grow + 0.01); update_caption()
                 elif event.key == pygame.K_a: p_grow = max(0.0, p_grow - 0.01); update_caption()
-                elif event.key == pygame.K_w: p_beat = min(1.0, p_beat + 0.01); update_caption()
-                elif event.key == pygame.K_s: p_beat = max(0.0, p_beat - 0.01); update_caption()
                 elif event.key == pygame.K_e: p_die = min(1.0, p_die + 0.01); update_caption()
                 elif event.key == pygame.K_d: p_die = max(0.0, p_die - 0.01); update_caption()
                 elif event.key == pygame.K_t: varepsilon = min(0.1, varepsilon + 0.001); update_caption()
                 elif event.key == pygame.K_g: varepsilon = max(0.0, varepsilon - 0.001); update_caption()
+
+                elif event.key == pygame.K_y: p_beat_r = min(1.0, p_beat_r + 0.01); update_caption()
+                elif event.key == pygame.K_h: p_beat_r = max(0.0, p_beat_r - 0.01); update_caption()
+                elif event.key == pygame.K_u: r_beat_s = min(1.0, r_beat_s + 0.01); update_caption()
+                elif event.key == pygame.K_j: r_beat_s = max(0.0, r_beat_s - 0.01); update_caption()
+                elif event.key == pygame.K_i: s_beat_p = min(0.1, s_beat_p + 0.01); update_caption()
+                elif event.key == pygame.K_k: s_beat_p = max(0.0, s_beat_p - 0.01); update_caption()
+
+
+
+
+
                 
                 # --- FPS Controls ---
                 elif event.key == pygame.K_UP: current_fps += 5; update_caption()

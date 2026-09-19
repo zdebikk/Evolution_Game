@@ -64,7 +64,7 @@ def main():
     def update_caption():
         status = "Run" if not paused else "Psd"
         pygame.display.set_caption(
-            f"[{status}] FPS:{current_fps} | b:{beta:.2f} m:{mu:.2f} | Trvl:{travel_rate} | Q-Thresh(U/J):{q_threshold} Q-Dur(I/K):{q_duration}"
+            f"[{status}] FPS:{current_fps} | b(Q/A):{beta:.2f} a(W/S):{alpha:.2f} m(E/D):{mu:.2f} o(T/G):{omega:.2f} | Trvl(Y/H):{travel_rate} | Q-Thresh(U/J):{q_threshold} Q-Dur(I/K):{q_duration} | 'P' to Plot"
         )
 
     update_caption()

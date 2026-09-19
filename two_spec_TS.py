@@ -50,7 +50,7 @@ def main():
     def update_caption():
         status = "Running" if not paused else "Paused"
         pygame.display.set_caption(
-            f"My Fish [{status}] at {current_fps} FPS | Grow: {r_grow:.3f} | Eat: {p_eat:.3f} | Die: {d_die:.3f} | Epsilon: {varepsilon:.3f} | 'P' to Plot"
+            f"Lotka-Volterra [{status}] at {current_fps} FPS | Grow(Q/A): {r_grow:.3f} | Eat(W/S): {p_eat:.3f} | Die(E/D): {d_die:.3f} | Epsilon(T/G): {varepsilon:.3f} | 'P' to Plot"
         )
 
     update_caption()

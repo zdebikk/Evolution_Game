@@ -28,6 +28,7 @@ INSTRUCTIONS_TEXT = [
     "UP/DN : Adjust Simulation Speed (FPS)",
     "R     : Reset Grid to Initial State",
     "C     : Clear Grid completely",
+    "ESC   : Return to Main Menu / Quit",
     "",
     "--- [1] DISCRETE CONWAY KERNELS ---",
     "1-4   : Switch Spatial Kernels",
