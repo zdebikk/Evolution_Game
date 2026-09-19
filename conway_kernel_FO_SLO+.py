@@ -2,10 +2,11 @@ import pygame
 import numpy as np
 from scipy.signal import convolve2d
 
+
 # --- 1. Dimensions & Resolution ---
 COLS = 300
 ROWS = 175
-CELL_SIZE = 4
+CELL_SIZE = 8
 WIDTH_PX = COLS * CELL_SIZE
 HEIGHT_PX = ROWS * CELL_SIZE
 PROBABILITY_ALIVE = 0.15  

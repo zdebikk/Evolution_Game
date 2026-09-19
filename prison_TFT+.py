@@ -4,10 +4,19 @@ from scipy.signal import convolve2d
 from scipy.ndimage import maximum_filter
 import matplotlib.pyplot as plt
 
+
+import ctypes
+try:
+    # Forces Windows to respect the true pixel dimensions
+    ctypes.windll.user32.SetProcessDPIAware()
+except AttributeError:
+    pass # Skips this if you ever run it on Mac/Linux
+
+
 # --- 1. Dimensions & Resolution ---
 COLS = 300
 ROWS = 175
-CELL_SIZE = 4
+CELL_SIZE = 8
 WIDTH_PX = COLS * CELL_SIZE
 HEIGHT_PX = ROWS * CELL_SIZE
 
@@ -89,6 +98,10 @@ def main():
                 elif event.key == pygame.K_p:
                     if len(history['AllD']) > 0:
                         plt.figure(figsize=(10, 6), facecolor='#191102')
+                        plt.gcf().canvas.mpl_connect(
+                            'key_press_event',
+                            lambda event: plt.close() if event.key == 'escape' else None
+                        )
                         ax = plt.axes()
                         ax.set_facecolor('#191102')
                         
@@ -107,6 +120,7 @@ def main():
                         plt.legend(facecolor='#191102', edgecolor='white', labelcolor='white')
                         plt.grid(True, linestyle='--', alpha=0.3, color='gray')
                         plt.show()
+
 
         # --- Mouse Interaction ---
         mouse_buttons = pygame.mouse.get_pressed()
