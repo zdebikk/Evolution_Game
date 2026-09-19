@@ -16,7 +16,8 @@ SIMULATIONS = {
     pygame.K_2: "lenia_SLO+.py",
     pygame.K_3: "SIR_quarantine_TS_D_ID_Trav_SLO_AQ+.py",
     pygame.K_4: "two_spec_TS+.py",
-    pygame.K_5: "rybki_fale+.py"  
+    pygame.K_5: "rybki_fale+.py",
+    pygame.K_6: "RPS_AS+.py"    
 }
 
 INSTRUCTIONS_TEXT = [
@@ -88,6 +89,7 @@ def main():
             opt3 = font_medium.render("[3] Spatial SIR Epidemic", True, TEXT_COLOR)
             opt4 = font_medium.render("[4] Lotka-Volterra Predator/Prey", True, TEXT_COLOR)
             opt5 = font_medium.render("[5] My Fish", True, TEXT_COLOR)
+            opt6 = font_medium.render("[6] Rock Paper Scissors (Lizard Spock)", True, TEXT_COLOR)
             
             info = font_medium.render("Press [I] to view all controls & instructions", True, HIGHLIGHT)
             quit_opt = font_medium.render("[ESC] Quit", True, WARNING_COLOR)
@@ -98,7 +100,8 @@ def main():
             screen.blit(opt3, (50, 240))
             screen.blit(opt4, (50, 290))
             screen.blit(opt5, (50, 340))
-            screen.blit(info, (50, 420))
+            screen.blit(opt6, (50, 390))
+            screen.blit(info, (50, 450))
             screen.blit(quit_opt, (50, 480))
 
         pygame.display.flip()
