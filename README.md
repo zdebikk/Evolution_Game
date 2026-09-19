@@ -10,11 +10,12 @@ A collection of spatial cellular automata and evolutionary game theory simulatio
 
 1. **Clone the repository:**
    ```bash
-   git clone [https://github.com/zdebikk/Evolution_Game.git](https://github.com/zdebikk/Evolution_Game.git)
+   git clone https://github.com/zdebikk/Evolution_Game.git
    cd Evolution_Game
 
 
-   python -m venv .venv # Create a virtual environment
+   py -3.12 -m venv .venv # Create a virtual environment
+   # macOD/Linux: python3.12 -m venv .venv
    .venv\Scripts\activate # Activate the environment
    # macOS/Linux: source .venv/bin/activate
    pip install -r requirements.txt # Install dependencies
