@@ -12,14 +12,14 @@ WARNING_COLOR = (255, 85, 85)
 
 # Map menu options to your most advanced script versions based on your directory
 SIMULATIONS = {
-    pygame.K_1: "conway_kernel_FO_SLO+.py",
-    pygame.K_2: "lenia_SLO+.py",
-    pygame.K_3: "SIR_quarantine_TS_D_ID_Trav_SLO_AQ+.py",
-    pygame.K_4: "two_spec_TS+.py",
-    pygame.K_5: "rybki_fale+.py",
-    pygame.K_6: "RPS_AS+.py",
-    pygame.K_7: "prison+.py",
-    pygame.K_8: "prison_TFT+.py"    
+    pygame.K_1: "conway_kernel_FO_SLO.py",
+    pygame.K_2: "lenia_SLO.py",
+    pygame.K_3: "SIR_quarantine_TS_D_ID_Trav_SLO_AQ.py",
+    pygame.K_4: "two_spec_TS.py",
+    pygame.K_5: "rybki_fale.py",
+    pygame.K_6: "RPS_AS.py",
+    pygame.K_7: "prison.py",
+    pygame.K_8: "prison_TFT.py"    
 }
 
 INSTRUCTIONS_TEXT = [
