@@ -3,6 +3,8 @@
 A modular simulation suite for emergent systems: continuous automata (Lenia), 
 spatial game theory (Prisoner's Dilemma, RPS), epidemiology (SIR), and Conway variants.
 
+The suggested version of Python for this is 3.12
+
 ## Quickstart
 
 1. **Clone & Setup Environment**:
