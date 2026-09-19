@@ -17,7 +17,9 @@ SIMULATIONS = {
     pygame.K_3: "SIR_quarantine_TS_D_ID_Trav_SLO_AQ+.py",
     pygame.K_4: "two_spec_TS+.py",
     pygame.K_5: "rybki_fale+.py",
-    pygame.K_6: "RPS_AS+.py"    
+    pygame.K_6: "RPS_AS+.py",
+    pygame.K_7: "prison+.py",
+    pygame.K_8: "prison_TFT+.py"    
 }
 
 INSTRUCTIONS_TEXT = [
@@ -50,6 +52,13 @@ INSTRUCTIONS_TEXT = [
     "P     : Generate Matplotlib Population Curve",
     "Clicks: Left=Drop Predators, Right=Drop Prey",
     "",
+    "--- [6] ROCK PAPER SCISSORS ---",
+    "Q/A: Grow | W/S: Beat | E/D: Die",
+    "",
+    "--- [7/8] PRISONER'S DILEMMA ---",
+    "Q/A: Temptation(T) | W/S: Reward(R)",
+    "E/D: Penalty(P)    | T/G: Sucker(S)",
+    "",
     "Press ESC or 'I' to return to the Main Menu."
 ]
 
@@ -80,7 +89,7 @@ def main():
         screen.fill(BG_COLOR)
 
         if show_instructions:
-            render_multiline(screen, INSTRUCTIONS_TEXT, font_small, 40, 40, TEXT_COLOR)
+            render_multiline(screen, INSTRUCTIONS_TEXT, font_small, 40, 20, TEXT_COLOR)
         else:
             # Main Menu Rendering
             title = font_large.render("GAME of LIFE", True, HIGHLIGHT)
@@ -89,20 +98,26 @@ def main():
             opt3 = font_medium.render("[3] Spatial SIR Epidemic", True, TEXT_COLOR)
             opt4 = font_medium.render("[4] Lotka-Volterra Predator/Prey", True, TEXT_COLOR)
             opt5 = font_medium.render("[5] My Fish", True, TEXT_COLOR)
-            opt6 = font_medium.render("[6] Rock Paper Scissors (Lizard Spock)", True, TEXT_COLOR)
+            opt6 = font_medium.render("[6] Rock Paper Scissors", True, TEXT_COLOR)
+            opt7 = font_medium.render("[7] Spatial Prisoner's Dilemma", True, TEXT_COLOR)
+            opt8 = font_medium.render("[8] Spatial Prisoner's Dilemma with memory", True, TEXT_COLOR)
             
             info = font_medium.render("Press [I] to view all controls & instructions", True, HIGHLIGHT)
             quit_opt = font_medium.render("[ESC] Quit", True, WARNING_COLOR)
 
+            # Properly spaced coordinates to prevent overlapping
             screen.blit(title, (50, 50))
-            screen.blit(opt1, (50, 140))
-            screen.blit(opt2, (50, 190))
-            screen.blit(opt3, (50, 240))
-            screen.blit(opt4, (50, 290))
-            screen.blit(opt5, (50, 340))
-            screen.blit(opt6, (50, 390))
-            screen.blit(info, (50, 450))
-            screen.blit(quit_opt, (50, 480))
+            screen.blit(opt1, (50, 120))
+            screen.blit(opt2, (50, 160))
+            screen.blit(opt3, (50, 200))
+            screen.blit(opt4, (50, 240))
+            screen.blit(opt5, (50, 280))
+            screen.blit(opt6, (50, 320))
+            screen.blit(opt7, (50, 360))
+            screen.blit(opt8, (50, 400))
+            
+            screen.blit(info, (50, 480))
+            screen.blit(quit_opt, (50, 520))
 
         pygame.display.flip()
 
