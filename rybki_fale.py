@@ -44,6 +44,7 @@ def main():
     p_eat = 0.12     
     d_die = 0.08     
     varepsilon = 0.001  
+    wave_type = 0
 
     running = True
     paused = True
@@ -58,7 +59,7 @@ def main():
     def update_caption():
         status = "Running" if not paused else "Paused"
         pygame.display.set_caption(
-            f"My Fish [{status}] at {current_fps} FPS | Grow: {r_grow:.3f} | Eat: {p_eat:.3f} | Die: {d_die:.3f} | Epsilon: {varepsilon:.3f} | 'P' to Plot"
+            f"My Fish [{status}] at {current_fps} FPS | Wave: {wave_type} | Grow: {r_grow:.3f} | Eat: {p_eat:.3f} | Die: {d_die:.3f} | Epsilon: {varepsilon:.3f} | 'P' to Plot"
         )
 
     update_caption()
@@ -107,6 +108,8 @@ def main():
                     varepsilon = min(1.0, varepsilon + 0.001); update_caption()
                 elif event.key == pygame.K_g:
                     varepsilon = max(0.0, varepsilon - 0.01); update_caption()
+                elif event.key == pygame.K_z:
+                    wave_type = (wave_type + 1) % 2; update_caption()
                 elif event.key == pygame.K_UP:
                     current_fps += 5; update_caption()
                 elif event.key == pygame.K_DOWN:
@@ -122,9 +125,12 @@ def main():
                 elif mouse_buttons[2]: 
                     grid[gx-2:gx+3, gy-2:gy+3] = 1
 
-        #wave = (0.5 * (np.sin(2*np.pi/COLS* X * 2 +frame_count * 0.02 )) + 0.5)
-        #wave = (0.25 * (np.sin(2*np.pi/COLS* X * 2 +frame_count * 0.02 )) + 0.25 * (np.sin(2*np.pi/ROWS* Y * 2 +frame_count * 0.02 )) + 0.5)
-        wave = (0.25 * (np.sin(2*np.pi/COLS* X * 3 )) + 0.25 * (np.sin(2*np.pi/ROWS* Y * 2 )))*np.sin(frame_count * 0.02) + 0.5
+        if wave_type == 0:
+            wave = (0.25 * (np.sin(2*np.pi/COLS* X * 3 )) + 0.25 * (np.sin(2*np.pi/ROWS* Y * 2 )))*np.sin(frame_count * 0.02) + 0.5
+        elif wave_type == 1:
+            wave = (0.5 * (np.sin(2*np.pi/COLS* X * 2 +frame_count * 0.02 )) + 0.5)
+
+
         if not paused:
             frame_count += 1
 

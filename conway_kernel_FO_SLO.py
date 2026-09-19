@@ -3,6 +3,13 @@ import numpy as np
 from scipy.signal import convolve2d
 
 
+import ctypes
+try:
+    ctypes.windll.user32.SetProcessDPIAware()
+except AttributeError:
+    pass
+
+
 # --- 1. Dimensions & Resolution ---
 COLS = 300
 ROWS = 175
