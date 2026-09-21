@@ -1,6 +1,6 @@
 import pygame
 import numpy as np
-from scipy.signal import convolve2d
+from scipy.ndimage import convolve
 
 import ctypes
 try:
@@ -116,7 +116,7 @@ def main():
         # --- Compute Continuous Generation ---
         if not paused:
             dt = 0.1  # Fractional time step smooths the transitions
-            U = convolve2d(grid, KERNEL, mode='same', boundary='wrap')
+            U = convolve(grid, KERNEL, mode='wrap')
             growth = growth_function(U, mu, sigma)
             
             # Apply growth smoothly and clamp
