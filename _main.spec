@@ -22,7 +22,7 @@ exe = EXE(
     a.binaries,
     a.datas,
     [],
-    name='_main',
+    name='Game of Life',
     debug=False,
     bootloader_ignore_signals=False,
     strip=False,

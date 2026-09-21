@@ -4,7 +4,6 @@ A collection of spatial cellular automata and evolutionary game theory simulatio
 
 ## Prerequisites
 * **Python 3.12** (Strictly recommended to ensure compatibility with the specific NumPy 2.4 and Pygame 2.6 rendering pipeline used in this project)
-* Git
 
 ## Installation & Setup
 
@@ -27,7 +26,6 @@ A collection of spatial cellular automata and evolutionary game theory simulatio
    ```bash
    pip install -r requirements.txt
    python main.py
-
 
 ## Building the executable
    ```bash
