@@ -1,6 +1,6 @@
 import pygame
 import numpy as np
-from scipy.signal import convolve2d
+import scipy.ndimage as convolve
 from scipy.ndimage import maximum_filter
 import matplotlib.pyplot as plt
 
@@ -135,8 +135,8 @@ def main():
             mask_d = (grid == 0)
             
             # 1. Count neighbors
-            neighbors_c = convolve2d(mask_c, KERNEL, mode='same', boundary='wrap')
-            neighbors_d = convolve2d(mask_d, KERNEL, mode='same', boundary='wrap')
+            neighbors_c = convolve(mask_c, KERNEL, mode='wrap')
+            neighbors_d = convolve(mask_d, KERNEL, mode='wrap')
             
             # 2. Calculate Payoffs for every cell
             payoffs = np.zeros((COLS, ROWS), dtype=float)

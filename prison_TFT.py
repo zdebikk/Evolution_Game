@@ -1,8 +1,8 @@
 import pygame
 import numpy as np
-from scipy.signal import convolve2d
 from scipy.ndimage import maximum_filter
 import matplotlib.pyplot as plt
+import scipy.ndimage as convolve
 
 
 import ctypes
@@ -142,9 +142,9 @@ def main():
             mask_tft  = (grid == 2)
             
             # 1. Count neighbors of each strategy type
-            n_alld = convolve2d(mask_alld, KERNEL, mode='same', boundary='wrap')
-            n_allc = convolve2d(mask_allc, KERNEL, mode='same', boundary='wrap')
-            n_tft  = convolve2d(mask_tft, KERNEL, mode='same', boundary='wrap')
+            n_alld = convolve(mask_alld, KERNEL, mode='wrap')
+            n_allc = convolve(mask_allc, KERNEL, mode='wrap')
+            n_tft  = convolve(mask_tft, KERNEL, mode='wrap')
             
             # 2. Calculate Expected Payoffs over m_rounds
             payoffs = np.zeros((COLS, ROWS), dtype=float)

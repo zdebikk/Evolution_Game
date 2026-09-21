@@ -1,6 +1,6 @@
 import pygame
 import numpy as np
-from scipy.signal import convolve2d
+import scipy.ndimage as convolve
 import matplotlib.pyplot as plt
 
 
@@ -132,8 +132,8 @@ def main():
             prey_mask = (grid == 1).astype(np.uint8)
             pred_mask = (grid == 2).astype(np.uint8)
             
-            prey_neighbors = convolve2d(prey_mask, KERNEL, mode='same', boundary='wrap')
-            pred_neighbors = convolve2d(pred_mask, KERNEL, mode='same', boundary='wrap')
+            prey_neighbors = convolve(prey_mask, KERNEL, mode='wrap')
+            pred_neighbors = convolve(pred_mask, KERNEL, mode='wrap')
             
             rand_grow = np.random.rand(COLS, ROWS)
             rand_eat = np.random.rand(COLS, ROWS)

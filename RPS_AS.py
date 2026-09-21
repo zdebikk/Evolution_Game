@@ -1,6 +1,6 @@
 import pygame
 import numpy as np
-from scipy.signal import convolve2d
+import scipy.ndimage as convolve
 import matplotlib.pyplot as plt
 
 
@@ -139,9 +139,9 @@ def main():
             mask_p = (grid == 2).astype(np.uint8)
             mask_s = (grid == 3).astype(np.uint8)
             
-            neighbors_r = convolve2d(mask_r, KERNEL, mode='same', boundary='wrap')
-            neighbors_p = convolve2d(mask_p, KERNEL, mode='same', boundary='wrap')
-            neighbors_s = convolve2d(mask_s, KERNEL, mode='same', boundary='wrap')
+            neighbors_r = convolve(mask_r, KERNEL, mode='wrap')
+            neighbors_p = convolve(mask_p, KERNEL, mode='wrap')
+            neighbors_s = convolve(mask_s, KERNEL, mode='wrap')
             
             # 1. Attack Logic
             r_to_p = (grid == 1) & (np.random.rand(COLS, ROWS) < neighbors_p * p_beat_p)

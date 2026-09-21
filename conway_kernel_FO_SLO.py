@@ -1,6 +1,6 @@
 import pygame
 import numpy as np
-from scipy.signal import convolve2d
+from scipy.ndimage import convolve
 
 
 import ctypes
@@ -116,20 +116,20 @@ def main():
         # --- Compute Next Generation Based on Selected Mode ---
         if not paused:
             if current_mode == 1:
-                neighbors = convolve2d(grid, KERNEL_1, mode='same', boundary='wrap')
+                neighbors = convolve(grid, KERNEL_1, mode='wrap')
                 grid = ((neighbors == 3) | ((grid == 1) & (neighbors == 2))).astype(np.uint8)
             
             elif current_mode == 2:
-                neighbors = convolve2d(grid, KERNEL_2, mode='same', boundary='wrap')
+                neighbors = convolve(grid, KERNEL_2, mode='wrap')
                 grid = ((neighbors == 1) | ((grid == 1) & (neighbors == 2))).astype(np.uint8)
             
             elif current_mode == 3:
-                neighbors = convolve2d(grid, KERNEL_3, mode='same', boundary='wrap')
+                neighbors = convolve(grid, KERNEL_3, mode='wrap')
                 grid = (((neighbors == 5) | (neighbors == 6)) | 
                         ((grid == 1) & ((neighbors >= 4) & (neighbors <= 7)))).astype(np.uint8)
             
             elif current_mode == 4:
-                neighbors = convolve2d(grid, KERNEL_4, mode='same', boundary='wrap')
+                neighbors = convolve(grid, KERNEL_4, mode='wrap')
                 grid = (((neighbors >= 7) & (neighbors <= 9)) | 
                         ((grid == 1) & ((neighbors >= 5) & (neighbors <= 7)))).astype(np.uint8)
 

@@ -1,6 +1,6 @@
 import pygame
 import numpy as np
-from scipy.signal import convolve2d
+import scipy.ndimage as convolve
 import matplotlib.pyplot as plt
 
 
@@ -163,9 +163,9 @@ def main():
             active_infectious = ((grid == 1) & (q_timers == 0)).astype(np.uint8)
             
             # Infection utilizes the 3x3 KERNEL
-            infection_exposure = convolve2d(active_infectious, KERNEL, mode='same', boundary='wrap')
+            infection_exposure = convolve(active_infectious, KERNEL, mode='wrap')
             # Quarantine scanning utilizes the 5x5 Q_KERNEL
-            q_exposure = convolve2d(active_infectious, Q_KERNEL, mode='same', boundary='wrap')
+            q_exposure = convolve(active_infectious, Q_KERNEL, mode='wrap')
             
             # 4. Trigger New Quarantines (using q_exposure)
             new_quarantines = (q_exposure >= q_threshold) & (grid != 3) & (grid != 4) & (q_timers == 0)
