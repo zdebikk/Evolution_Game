@@ -180,7 +180,6 @@ def main():
         pygame.display.flip()
         clock.tick(60 if paused else current_fps)
 
-    pygame.quit()
 
 if __name__ == "__main__":
     main()

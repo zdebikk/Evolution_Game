@@ -1,10 +1,23 @@
+import ctypes
+import os
 import sys
 import subprocess
 import pygame
 
+os.environ['SDL_VIDEO_CENTERED'] = '1'
+
+import conway_kernel_FO_SLO
+import lenia_SLO
+import SIR_quarantine_TS_D_ID_Trav_SLO_AQ
+import two_spec_TS
+import rybki_fale
+import RPS_AS
+import prison
+import prison_TFT
+
 # --- Configuration ---
-WIDTH = 800
-HEIGHT = 600
+WIDTH = 2400
+HEIGHT = 175*8
 BG_COLOR = (18, 18, 24)
 TEXT_COLOR = (200, 200, 200)
 HIGHLIGHT = (0, 255, 170)
@@ -12,14 +25,14 @@ WARNING_COLOR = (255, 85, 85)
 
 # Map menu options to your most advanced script versions based on your directory
 SIMULATIONS = {
-    pygame.K_1: "conway_kernel_FO_SLO.py",
-    pygame.K_2: "lenia_SLO.py",
-    pygame.K_3: "SIR_quarantine_TS_D_ID_Trav_SLO_AQ.py",
-    pygame.K_4: "two_spec_TS.py",
-    pygame.K_5: "rybki_fale.py",
-    pygame.K_6: "RPS_AS.py",
-    pygame.K_7: "prison.py",
-    pygame.K_8: "prison_TFT.py"    
+    pygame.K_1: conway_kernel_FO_SLO.main,
+    pygame.K_2: lenia_SLO.main,
+    pygame.K_3: SIR_quarantine_TS_D_ID_Trav_SLO_AQ.main,
+    pygame.K_4: two_spec_TS.main,
+    pygame.K_5: rybki_fale.main,
+    pygame.K_6: RPS_AS.main,
+    pygame.K_7: prison.main,
+    pygame.K_8: prison_TFT.main    
 }
 
 INSTRUCTIONS_TEXT = [
@@ -50,14 +63,19 @@ def render_multiline(screen, text_list, font, start_x, start_y, color):
         y += font.get_linesize() + 2
 
 def main():
+
+    try:
+        ctypes.windll.user32.SetProcessDPIAware()
+    except AttributeError:
+        pass
     pygame.init()
     screen = pygame.display.set_mode((WIDTH, HEIGHT))
     pygame.display.set_caption("Evolution Game - Central Hub")
     clock = pygame.time.Clock()
 
-    font_large = pygame.font.SysFont("consolas", 32, bold=True)
-    font_medium = pygame.font.SysFont("consolas", 20)
-    font_small = pygame.font.SysFont("consolas", 16)
+    font_large = pygame.font.SysFont("consolas", 64, bold=True)
+    font_medium = pygame.font.SysFont("consolas", 40)
+    font_small = pygame.font.SysFont("consolas", 32)
 
     show_instructions = False
 
@@ -82,25 +100,25 @@ def main():
             quit_opt = font_medium.render("[ESC] Quit", True, WARNING_COLOR)
 
             # Properly spaced coordinates to prevent overlapping
-            screen.blit(title, (50, 50))
-            screen.blit(opt1, (50, 120))
-            screen.blit(opt2, (50, 160))
-            screen.blit(opt3, (50, 200))
-            screen.blit(opt4, (50, 240))
-            screen.blit(opt5, (50, 280))
-            screen.blit(opt6, (50, 320))
-            screen.blit(opt7, (50, 360))
-            screen.blit(opt8, (50, 400))
-            
-            screen.blit(info, (50, 480))
-            screen.blit(quit_opt, (50, 520))
+            screen.blit(title, (100, 100))
+            screen.blit(opt1, (100, 220))
+            screen.blit(opt2, (100, 300))
+            screen.blit(opt3, (100, 380))
+            screen.blit(opt4, (100, 460))
+            screen.blit(opt5, (100, 540))
+            screen.blit(opt6, (100, 620))
+            screen.blit(opt7, (100, 700))
+            screen.blit(opt8, (100, 780))
+
+            screen.blit(info, (100, 900))
+            screen.blit(quit_opt, (100, 960))
 
         pygame.display.flip()
 
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 pygame.quit()
-                sys.exit()
+                return
                 
             elif event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_ESCAPE:
@@ -109,22 +127,24 @@ def main():
                         show_instructions = False
                     else:
                         pygame.quit()
-                        sys.exit()
+                        return
                         
                 elif event.key == pygame.K_i:
                     show_instructions = not show_instructions
-                    
+    
                 # Launch selected script if on the main menu
                 elif not show_instructions and event.key in SIMULATIONS:
-                    target_script = SIMULATIONS[event.key]
-                    
+                    target_function = SIMULATIONS[event.key]
+    
                     # Update caption to show it is running
-                    pygame.display.set_caption(f"Running: {target_script}...")
-                    
-                    # Launch the script using the current virtual environment's Python interpreter
-                    subprocess.Popen([sys.executable, target_script]).wait()
-                    
-                    # Restore caption when the child script is closed
+                    pygame.display.set_caption("Running simulation...")
+    
+                    # 1. Execute the imported subapp function natively
+                    target_function() 
+    
+                    # 2. When the subapp finishes (user presses ESC in the subapp), 
+                    # it returns here. Re-initialize the main menu's window dimensions and title.
+                    screen = pygame.display.set_mode((WIDTH, HEIGHT))
                     pygame.display.set_caption("Evolution Game - Central Hub")
 
         clock.tick(15)

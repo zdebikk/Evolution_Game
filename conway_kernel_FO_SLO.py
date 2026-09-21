@@ -154,7 +154,5 @@ def main():
         # Apply the dynamic framerate variable here
         clock.tick(60 if paused else current_fps)
 
-    pygame.quit()
-
 if __name__ == "__main__":
     main()

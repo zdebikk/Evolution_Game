@@ -20,3 +20,8 @@ A collection of spatial cellular automata and evolutionary game theory simulatio
    # macOS/Linux: source .venv/bin/activate
    pip install -r requirements.txt # Install dependencies
    python main.py
+
+
+## Building the executable
+
+   pyinstaller --onefile --windowed _main.py
