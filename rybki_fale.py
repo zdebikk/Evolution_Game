@@ -156,8 +156,8 @@ def main():
             growth_chanced = ((preyd_neighbors * r_grow) + varepsilon)
             new_preyd = (grid == 0) & (rand_growd < growth_chanced/2)
 
-            eat_chance = (pred_neighbors * p_eat)*wave
-            eat_chanced = (pred_neighbors * p_eat)*(1-wave)
+            eat_chance = (pred_neighbors * p_eat)*(1-wave)
+            eat_chanced = (pred_neighbors * p_eat)*(wave)
             eats_prey = (grid == 1) & (rand_eat < eat_chance)
             eats_preydark = (grid == 3) & (rand_eat < eat_chanced)
 
