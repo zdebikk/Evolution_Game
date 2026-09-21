@@ -1,6 +1,6 @@
 import pygame
 import numpy as np
-import scipy.ndimage as convolve
+from scipy.ndimage import convolve
 import matplotlib.pyplot as plt
 
 

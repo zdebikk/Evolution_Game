@@ -1,7 +1,7 @@
 import pygame
 import numpy as np
 from scipy.ndimage import maximum_filter
-import matplotlib.pyplot as plt
+from scipy.ndimage import convolve
 import scipy.ndimage as convolve
 
 
