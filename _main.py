@@ -62,6 +62,19 @@ def render_multiline(screen, text_list, font, start_x, start_y, color):
         screen.blit(surface, (start_x, y))
         y += font.get_linesize() + 2
 
+
+# 1. Force Windows to give this window its own distinct taskbar icon
+try:
+    myappid = 'mycompany.evolutiongame.hub.1.0'  # Arbitrary unique string
+    ctypes.windll.shell32.SetCurrentProcessExplicitAppUserModelID(myappid)
+except Exception:
+    pass
+
+# Helper to find files bundled inside PyInstaller's temp directory
+def resource_path(relative_path):
+    base_path = getattr(sys, '_MEIPASS', os.path.abspath("."))
+    return os.path.join(base_path, relative_path)
+
 def main():
 
     try:
@@ -69,6 +82,14 @@ def main():
     except AttributeError:
         pass
     pygame.init()
+
+    # 2. Load the icon image and set it on the Pygame window surface
+    icon_path = resource_path("game_icon.ico")
+    if os.path.exists(icon_path):
+        app_icon = pygame.image.load(icon_path)
+        pygame.display.set_icon(app_icon)
+
+
     screen = pygame.display.set_mode((WIDTH, HEIGHT))
     pygame.display.set_caption("Evolution Game - Central Hub")
     clock = pygame.time.Clock()
