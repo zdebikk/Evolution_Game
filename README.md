@@ -24,4 +24,4 @@ A collection of spatial cellular automata and evolutionary game theory simulatio
 
 ## Building the executable
 
-   pyinstaller --onefile --windowed _main.py
+   pyinstaller --onefile --windowed --icon=icon.ico _main.py
