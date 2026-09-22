@@ -184,9 +184,9 @@ def main():
         pygame.display.flip()
         clock.tick(60 if paused else current_fps)
 
-    # Bezpieczne zamknięcie i powrót do _main
-    pygame.quit()
+    # Wychodzimy do _main bez wyłączania silnika Pygame
     return
 
 if __name__ == "__main__":
     main()
+    pygame.quit()  # Wyłączamy Pygame tylko wtedy, gdy odpalamy skrypt samodzielnie
