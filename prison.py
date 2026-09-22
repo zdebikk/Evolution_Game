@@ -1,9 +1,7 @@
 import pygame
 import numpy as np
-from scipy.ndimage import convolve
-from scipy.ndimage import maximum_filter
-import matplotlib.pyplot as plt
-
+from scipy.ndimage import convolve, maximum_filter
+import matplotlib.pyplot as plt 
 
 import ctypes
 try:
@@ -11,7 +9,6 @@ try:
     ctypes.windll.user32.SetProcessDPIAware()
 except AttributeError:
     pass # Skips this if you ever run it on Mac/Linux
-
 
 # --- 1. Dimensions & Resolution ---
 COLS = 300
@@ -77,6 +74,7 @@ def main():
                     grid = np.ones((COLS, ROWS), dtype=np.uint8)
                     grid[COLS//2, ROWS//2] = 0
                     prev_grid = grid.copy()
+                    history = {'C': [], 'D': []}
                 elif event.key == pygame.K_r:
                     # Generate random initial conditions
                     grid = np.random.choice([0, 1], size=(COLS, ROWS), p=[0.5, 0.5]).astype(np.uint8)
@@ -103,6 +101,10 @@ def main():
                 elif event.key == pygame.K_p:
                     if len(history['C']) > 0:
                         plt.figure(figsize=(10, 6), facecolor='#191102')
+                        plt.gcf().canvas.mpl_connect(
+                            'key_press_event',
+                            lambda event: plt.close() if event.key == 'escape' else None
+                        )
                         ax = plt.axes()
                         ax.set_facecolor('#191102')
                         plt.plot(history['C'], label='Cooperators', color='#669bbc', linewidth=2)
@@ -131,12 +133,14 @@ def main():
         if not paused:
             prev_grid = grid.copy()
             
+            # Maski zostawiamy jako boolean
             mask_c = (grid == 1)
             mask_d = (grid == 0)
             
             # 1. Count neighbors
-            neighbors_c = convolve(mask_c, KERNEL, mode='wrap')
-            neighbors_d = convolve(mask_d, KERNEL, mode='wrap')
+            # Rzutujemy na uint8 tylko na czas operacji konwolucji
+            neighbors_c = convolve(mask_c.astype(np.uint8), KERNEL, mode='wrap')
+            neighbors_d = convolve(mask_d.astype(np.uint8), KERNEL, mode='wrap')
             
             # 2. Calculate Payoffs for every cell
             payoffs = np.zeros((COLS, ROWS), dtype=float)
@@ -180,6 +184,9 @@ def main():
         pygame.display.flip()
         clock.tick(60 if paused else current_fps)
 
+    # Bezpieczne zamknięcie i powrót do _main
+    pygame.quit()
+    return
 
 if __name__ == "__main__":
     main()

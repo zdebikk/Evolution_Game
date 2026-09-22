@@ -1,9 +1,8 @@
 import pygame
 import numpy as np
-from scipy.ndimage import maximum_filter
 from scipy.ndimage import convolve
-import scipy.ndimage as convolve
-
+from scipy.ndimage import maximum_filter
+import matplotlib.pyplot as plt
 
 import ctypes
 try:
@@ -11,7 +10,6 @@ try:
     ctypes.windll.user32.SetProcessDPIAware()
 except AttributeError:
     pass # Skips this if you ever run it on Mac/Linux
-
 
 # --- 1. Dimensions & Resolution ---
 COLS = 300
@@ -121,7 +119,6 @@ def main():
                         plt.grid(True, linestyle='--', alpha=0.3, color='gray')
                         plt.show()
 
-
         # --- Mouse Interaction ---
         mouse_buttons = pygame.mouse.get_pressed()
         if any(mouse_buttons):
@@ -137,14 +134,16 @@ def main():
 
         # --- Compute Stochastic IPD Transitions (AllC, AllD, TFT) ---
         if not paused:
+            # Zachowujemy maski jako wartości logiczne (True/False) do późniejszego indeksowania
             mask_alld = (grid == 0)
             mask_allc = (grid == 1)
             mask_tft  = (grid == 2)
             
             # 1. Count neighbors of each strategy type
-            n_alld = convolve(mask_alld, KERNEL, mode='wrap')
-            n_allc = convolve(mask_allc, KERNEL, mode='wrap')
-            n_tft  = convolve(mask_tft, KERNEL, mode='wrap')
+            # Konwertujemy na uint8 tylko w momencie splotu dla zwiększenia wydajności
+            n_alld = convolve(mask_alld.astype(np.uint8), KERNEL, mode='wrap')
+            n_allc = convolve(mask_allc.astype(np.uint8), KERNEL, mode='wrap')
+            n_tft  = convolve(mask_tft.astype(np.uint8), KERNEL, mode='wrap')
             
             # 2. Calculate Expected Payoffs over m_rounds
             payoffs = np.zeros((COLS, ROWS), dtype=float)
@@ -173,17 +172,25 @@ def main():
             max_allc_hood = maximum_filter(payoffs_allc_only, size=3, mode='wrap')
             max_tft_hood  = maximum_filter(payoffs_tft_only, size=3, mode='wrap')
             
-            # 4. Apply the winning strategies
-            max_stack = np.stack([max_alld_hood, max_allc_hood, max_tft_hood], axis=0)
-            grid = np.argmax(max_stack, axis=0).astype(np.uint8)
-
+            # 4. Apply the winning strategies without np.stack()
+            # Startujemy z założenia, że najlepszy jest AllD (0)
+            grid = np.zeros((COLS, ROWS), dtype=np.uint8)
+            best_payoffs = max_alld_hood
+            
+            # Sprawdzamy czy AllC (1) daje lepszy wynik
+            better_than_alld = max_allc_hood > best_payoffs
+            best_payoffs = np.where(better_than_alld, max_allc_hood, best_payoffs)
+            grid[better_than_alld] = 1
+            
+            # Sprawdzamy czy TFT (2) daje jeszcze lepszy wynik
+            better_than_best = max_tft_hood > best_payoffs
+            grid[better_than_best] = 2
             # Record metrics
             history['AllD'].append(np.count_nonzero(grid == 0))
             history['AllC'].append(np.count_nonzero(grid == 1))
             history['TFT'].append(np.count_nonzero(grid == 2))
 
         # --- Render Visuals ---
-        # Using np.zeros defaults the array to black, preventing memory static
         display_rgb = np.zeros((COLS, ROWS, 3), dtype=np.uint8)
         
         display_rgb[grid == 0] = COLOR_ALLD
@@ -196,7 +203,10 @@ def main():
         screen.blit(scaled_surface, (0, 0))
         pygame.display.flip()
         clock.tick(60 if paused else current_fps)
-
+        
+    # Bezpieczne zamknięcie okna po wyjściu z pętli i powrót do nadrzędnego skryptu
+    pygame.quit()
+    return
 
 if __name__ == "__main__":
     main()

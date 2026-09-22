@@ -56,8 +56,7 @@ def main():
     def update_caption():
         status = "Run" if not paused else "Psd"
         pygame.display.set_caption(
-            
-            f"RPS [{status}] at {current_fps} FPS | Grow(Q/A): {p_grow:.2f} | Eat(W/S): {p_beat:.2f} | Die(E/D): {p_die:.2f} | Epsilon(T/G): {varepsilon:.3f} | p_beat_r(Y/H): {p_beat_r:.2f} | r_beat_s(U/J): {r_beat_s:.2f} | s_beat_p(I/K): {s_beat_p:.2f} | 'P' to Plot"
+            f"RPS [{status}] at {current_fps} FPS | Grow(Q/A): {p_grow:.2f} | Eat(W/S): {p_beat:.2f} | Die(E/D): {p_die:.2f} | varepsilon(T/G): {varepsilon:.3f} | p_beat_r(Y/H): {p_beat_r:.2f} | p_beat_p(U/J): {p_beat_p:.2f} | p_beat_s(I/K): {p_beat_s:.2f} | 'P' to Plot"
         )
 
     update_caption()
@@ -87,10 +86,10 @@ def main():
 
                 elif event.key == pygame.K_y: p_beat_r = min(1.0, p_beat_r + 0.01); update_caption()
                 elif event.key == pygame.K_h: p_beat_r = max(0.0, p_beat_r - 0.01); update_caption()
-                elif event.key == pygame.K_u: r_beat_s = min(1.0, r_beat_s + 0.01); update_caption()
-                elif event.key == pygame.K_j: r_beat_s = max(0.0, r_beat_s - 0.01); update_caption()
-                elif event.key == pygame.K_i: s_beat_p = min(0.1, s_beat_p + 0.01); update_caption()
-                elif event.key == pygame.K_k: s_beat_p = max(0.0, s_beat_p - 0.01); update_caption()
+                elif event.key == pygame.K_u: p_beat_p = min(1.0, p_beat_p + 0.01); update_caption()
+                elif event.key == pygame.K_j: p_beat_p = max(0.0, p_beat_p - 0.01); update_caption()
+                elif event.key == pygame.K_i: p_beat_s = min(0.1, p_beat_s + 0.01); update_caption()
+                elif event.key == pygame.K_k: p_beat_s = max(0.0, p_beat_s - 0.01); update_caption()
 
 
 
