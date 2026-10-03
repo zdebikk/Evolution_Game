@@ -54,7 +54,7 @@ def main():
     def update_caption():
         status = "Run" if not paused else "Psd"
         pygame.display.set_caption(
-            f"Spatial IPD [{status}] FPS:{current_fps} | T:{T:.2f} | R:{R:.2f} | P:{P:.2f} | S:{S:.2f}"
+            f"Spatial IPD [{status}] FPS:{current_fps} | T!(Q/A):{T:.2f} | R(W/S):{R:.2f} | P(E/D):{P:.2f} | S(T/G):{S:.2f}"
         )
 
     update_caption()
