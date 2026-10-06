@@ -118,7 +118,7 @@ def main():
             dt = 0.1  # Fractional time step smooths the transitions
             U = convolve(grid, KERNEL, mode='wrap')
             growth = growth_function(U, mu, sigma)
-            
+        
             # Apply growth smoothly and clamp
             grid = np.clip(grid + growth * dt, 0.0, 1.0)
             

@@ -37,12 +37,12 @@ def main():
     grid[COLS//2, ROWS//2] = 0
     
     prev_grid = grid.copy()
-    history = {'C': [], 'D': []}
+    history = {'C': [], 'D': [], 'K_SIZE': []}
     
     # Payoff Parameters (Default to Fig 3 values)
     T = 1.40   # Temptation to defect (Q/A)
     R = 1.00   # Reward for mutual cooperation (W/S)
-    P = 0.00   # Penalty for mutual defection (E/D)
+    P = 0.05   # Penalty for mutual defection (E/D)
     S = -0.10  # Sucker's payoff (T/G)
 
     K_SIZE = 3
@@ -75,12 +75,12 @@ def main():
                     grid = np.ones((COLS, ROWS), dtype=np.uint8)
                     grid[COLS//2, ROWS//2] = 0
                     prev_grid = grid.copy()
-                    history = {'C': [], 'D': []}
+                    history = {'C': [], 'D': [], 'K_SIZE': []}
                 elif event.key == pygame.K_r:
                     # Generate random initial conditions
                     grid = np.random.choice([0, 1], size=(COLS, ROWS), p=[0.5, 0.5]).astype(np.uint8)
                     prev_grid = grid.copy()
-                    history = {'C': [], 'D': []}
+                    history = {'C': [], 'D': [], 'K_SIZE': []}
                 elif event.key == pygame.K_ESCAPE:
                     running = False
                 
@@ -94,12 +94,12 @@ def main():
                 elif event.key == pygame.K_t: S += 0.05; update_caption()
                 elif event.key == pygame.K_g: S -= 0.05; update_caption()
                 elif event.key == pygame.K_y:
-                    K_SIZE = max(3, K_SIZE + 2); update_caption()
+                    K_SIZE = min(41, K_SIZE + 2); update_caption()
                     KERNEL = np.ones((K_SIZE, K_SIZE))
                     KERNEL[K_SIZE//2, K_SIZE//2] = 0
 
                 elif event.key == pygame.K_h:
-                    K_SIZE = min(15, K_SIZE - 2); update_caption()
+                    K_SIZE = max(1, K_SIZE - 2); update_caption()
                     KERNEL = np.ones((K_SIZE, K_SIZE))
                     KERNEL[K_SIZE//2, K_SIZE//2] = 0
                 
@@ -117,8 +117,32 @@ def main():
                         )
                         ax = plt.axes()
                         ax.set_facecolor('#191102')
-                        plt.plot(history['C'], label='Cooperators', color='#669bbc', linewidth=2)
-                        plt.plot(history['D'], label='Defectors', color='#c1121f', linewidth=2)
+                        
+                        # --- RYSOWANIE PIONOWYCH PASÓW TŁA ---
+                        k_hist = history['K_SIZE']
+                        # Znajdź klatki, w których zmienił się rozmiar kernela
+                        changes = [0] + [i for i in range(1, len(k_hist)) if k_hist[i] != k_hist[i-1]] + [len(k_hist)]
+                        
+                        y_max = max(max(history['C']), max(history['D']))
+                        
+                        for i in range(len(changes) - 1):
+                            start_idx = changes[i]
+                            end_idx = changes[i+1]
+                            k_val = k_hist[start_idx]
+                            
+                            # Przezroczystość bieli rośnie wraz z wielkością kernela (od 0.06 dla K=3)
+                            shade_alpha = min(0.5, k_val * 0.02) 
+                            ax.axvspan(start_idx, end_idx, facecolor='white', alpha=shade_alpha, zorder=0)
+                            
+                            # Podpisz pas na samej górze (tylko jeśli trwał wystarczająco długo)
+                            if end_idx - start_idx > len(k_hist) * 0.03:
+                                ax.text(start_idx + (end_idx - start_idx)/2, y_max * 0.95, f'K={k_val}', 
+                                        color='white', ha='center', va='top', alpha=0.7, fontsize=10, weight='bold')
+
+                        # --- RYSOWANIE LINII POPULACJI (zorder=1 zapewnia warstwę nad tłem) ---
+                        plt.plot(history['C'], label='Cooperators', color='#669bbc', linewidth=2, zorder=1)
+                        plt.plot(history['D'], label='Defectors', color='#c1121f', linewidth=2, zorder=1)
+                        
                         plt.title("Spatial Prisoner's Dilemma Dynamics", color='white')
                         plt.xlabel("Generations", color='white')
                         plt.ylabel("Population Count", color='white')
@@ -127,7 +151,6 @@ def main():
                         plt.legend(facecolor='#191102', edgecolor='white', labelcolor='white')
                         plt.grid(True, linestyle='--', alpha=0.3, color='gray')
                         plt.show()
-
         # --- Mouse Interaction ---
         mouse_buttons = pygame.mouse.get_pressed()
         if any(mouse_buttons):
@@ -172,7 +195,7 @@ def main():
 
             history['C'].append(np.count_nonzero(grid == 1))
             history['D'].append(np.count_nonzero(grid == 0))
-
+            history['K_SIZE'].append(K_SIZE)
         # --- Render Visuals with 4-Color Transition Mapping ---
         display_rgb = np.empty((COLS, ROWS, 3), dtype=np.uint8)
         
