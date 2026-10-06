@@ -14,6 +14,7 @@ import rybki_fale
 import RPS_AS
 import prison
 import prison_TFT
+import woods
 
 # --- Configuration ---
 WIDTH = 2400
@@ -32,7 +33,8 @@ SIMULATIONS = {
     pygame.K_5: rybki_fale.main,
     pygame.K_6: RPS_AS.main,
     pygame.K_7: prison.main,
-    pygame.K_8: prison_TFT.main    
+    pygame.K_8: prison_TFT.main,    
+    pygame.K_9: woods.main   
 }
 
 INSTRUCTIONS_TEXT = [
@@ -95,7 +97,7 @@ def main():
             opt6 = font_medium.render("[6] Rock Paper Scissors", True, TEXT_COLOR)
             opt7 = font_medium.render("[7] Spatial Prisoner's Dilemma", True, TEXT_COLOR)
             opt8 = font_medium.render("[8] Spatial Prisoner's Dilemma with memory", True, TEXT_COLOR)
-            
+            opt9 = font_medium.render("[9] Woods Simulation", True, TEXT_COLOR)
             info = font_medium.render("Press [I] to view all controls & instructions", True, HIGHLIGHT)
             quit_opt = font_medium.render("[ESC] Quit", True, WARNING_COLOR)
 
@@ -109,9 +111,9 @@ def main():
             screen.blit(opt6, (100, 620))
             screen.blit(opt7, (100, 700))
             screen.blit(opt8, (100, 780))
-
-            screen.blit(info, (100, 900))
-            screen.blit(quit_opt, (100, 960))
+            screen.blit(opt9, (100, 860))
+            screen.blit(info, (100, 900+180))
+            screen.blit(quit_opt, (100, 960+180))
 
         pygame.display.flip()
 
