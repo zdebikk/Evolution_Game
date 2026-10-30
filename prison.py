@@ -19,10 +19,10 @@ HEIGHT_PX = ROWS * CELL_SIZE
 
 # --- 2. Spatial PD Visual States ---
 # Color code from Nowak & Sigmund (2004) Fig 3:
-COLOR_D     = np.array([193, 18, 31], dtype=np.uint8)   # Red: sustained D
-COLOR_C     = np.array([102, 155, 188], dtype=np.uint8)   # Blue: sustained C
-COLOR_NEW_C = np.array([96, 108, 56], dtype=np.uint8)   # Green: new C (was D)
-COLOR_NEW_D = np.array([205, 135, 66], dtype=np.uint8)  # Yellow: new D (was C)
+COLOR_D     = np.array([113, 9, 44], dtype=np.uint8)   # Red: sustained D
+COLOR_C     = np.array([37, 68, 65], dtype=np.uint8)   # Blue: sustained C
+COLOR_NEW_C = np.array([67, 170, 139], dtype=np.uint8)   # Green: new C (was D)
+COLOR_NEW_D = np.array([255, 111, 89], dtype=np.uint8)  # Yellow: new D (was C)
 
 # 3x3 Kernel (8 neighbors for playing the game)
 KERNEL = np.array([[1, 1, 1], 
