@@ -93,7 +93,7 @@ def main():
                 elif event.key == pygame.K_h: p_beat_r = max(0.0, p_beat_r - 0.01); update_caption()
                 elif event.key == pygame.K_u: p_beat_p = min(1.0, p_beat_p + 0.01); update_caption()
                 elif event.key == pygame.K_j: p_beat_p = max(0.0, p_beat_p - 0.01); update_caption()
-                elif event.key == pygame.K_i: p_beat_s = min(0.1, p_beat_s + 0.01); update_caption()
+                elif event.key == pygame.K_i: p_beat_s = min(1.0, p_beat_s + 0.01); update_caption()
                 elif event.key == pygame.K_k: p_beat_s = max(0.0, p_beat_s - 0.01); update_caption()
 
                 elif event.key == pygame.K_o:
