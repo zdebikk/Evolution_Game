@@ -11,8 +11,8 @@ import lenia_SLO
 import SIR_quarantine_TS_D_ID_Trav_SLO_AQ
 import two_spec_TS
 import rybki_fale
-import RPS_AS
-import prison
+import RPS_mixing
+import prison_mixing
 import prison_TFT
 import woods
 
@@ -31,8 +31,8 @@ SIMULATIONS = {
     pygame.K_3: SIR_quarantine_TS_D_ID_Trav_SLO_AQ.main,
     pygame.K_4: two_spec_TS.main,
     pygame.K_5: rybki_fale.main,
-    pygame.K_6: RPS_AS.main,
-    pygame.K_7: prison.main,
+    pygame.K_6: RPS_mixing.main,
+    pygame.K_7: prison_mixing.main,
     pygame.K_8: prison_TFT.main,    
     pygame.K_9: woods.main   
 }
